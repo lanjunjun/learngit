@@ -1,0 +1,60 @@
+[WARN ] 2016-04-01 11:04:42,840 [org.mybatis.spring.mapper.ClassPathMapperScanner:org.mybatis.spring.mapper.ClassPathMapperScanner.doScan(ClassPathMapperScanner.java:158)] No MyBatis mapper was found in '[com.rentcar.system.dao]' package. Please check your configuration.
+[DEBUG] 2016-04-01 11:04:43,825 [org.mybatis.spring.SqlSessionFactoryBean:org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:383)] Scanned package: 'com.rentcar.system.domain' for aliases
+[DEBUG] 2016-04-01 11:04:44,011 [org.mybatis.spring.SqlSessionFactoryBean:org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:431)] Parsed configuration file: 'class path resource [mybatis-config.xml]'
+[DEBUG] 2016-04-01 11:04:44,178 [org.mybatis.spring.SqlSessionFactoryBean:org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:472)] Parsed mapper file: 'file [D:\java\workspace\RentCarSystem\target\classes\sqlMap\department.xml]'
+[DEBUG] 2016-04-01 11:04:44,197 [org.mybatis.spring.SqlSessionFactoryBean:org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:472)] Parsed mapper file: 'file [D:\java\workspace\RentCarSystem\target\classes\sqlMap\user.xml]'
+[ERROR] 2016-04-01 11:04:44,283 [org.springframework.test.context.TestContextManager:org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:334)] Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@49912c99] to prepare test instance [com.rentcar.system.test.DepartmentTest@10163d6]
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'com.rentcar.system.test.DepartmentTest': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private com.rentcar.system.dao.DepartmentDao com.rentcar.system.test.DepartmentTest.departmentDao; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [com.rentcar.system.dao.DepartmentDao] found for dependency: expected at least 1 bean which qualifies as autowire candidate for this dependency. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:293)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1186)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireBeanProperties(AbstractAutowireCapableBeanFactory.java:384)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:110)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:75)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:331)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:213)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:290)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:292)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:233)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:87)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:71)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:176)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+Caused by: org.springframework.beans.factory.BeanCreationException: Could not autowire field: private com.rentcar.system.dao.DepartmentDao com.rentcar.system.test.DepartmentTest.departmentDao; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [com.rentcar.system.dao.DepartmentDao] found for dependency: expected at least 1 bean which qualifies as autowire candidate for this dependency. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:509)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:87)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:290)
+	... 26 more
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [com.rentcar.system.dao.DepartmentDao] found for dependency: expected at least 1 bean which qualifies as autowire candidate for this dependency. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoSuchBeanDefinitionException(DefaultListableBeanFactory.java:1118)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:967)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:862)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:481)
+	... 28 more
+[DEBUG] 2016-04-01 11:09:03,496 [org.mybatis.spring.mapper.ClassPathMapperScanner:org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider.findCandidateComponents(ClassPathScanningCandidateComponentProvider.java:284)] Identified candidate component class: file [D:\java\workspace\RentCarSystem\target\classes\com\rentcar\system\dao\DepartmentDao.class]
+[DEBUG] 2016-04-01 11:09:03,518 [org.mybatis.spring.mapper.ClassPathMapperScanner:org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider.findCandidateComponents(ClassPathScanningCandidateComponentProvider.java:284)] Identified candidate component class: file [D:\java\workspace\RentCarSystem\target\classes\com\rentcar\system\dao\UserDao.class]
+[DEBUG] 2016-04-01 11:09:03,529 [org.mybatis.spring.mapper.ClassPathMapperScanner:org.mybatis.spring.mapper.ClassPathMapperScanner.doScan(ClassPathMapperScanner.java:164)] Creating MapperFactoryBean with name 'departmentDao' and 'com.rentcar.system.dao.DepartmentDao' mapperInterface
+[DEBUG] 2016-04-01 11:09:03,531 [org.mybatis.spring.mapper.ClassPathMapperScanner:org.mybatis.spring.mapper.ClassPathMapperScanner.doScan(ClassPathMapperScanner.java:200)] Enabling autowire by type for MapperFactoryBean with name 'departmentDao'.
+[DEBUG] 2016-04-01 11:09:03,531 [org.mybatis.spring.mapper.ClassPathMapperScanner:org.mybatis.spring.mapper.ClassPathMapperScanner.doScan(ClassPathMapperScanner.java:164)] Creating MapperFactoryBean with name 'userDao' and 'com.rentcar.system.dao.UserDao' mapperInterface
+[DEBUG] 2016-04-01 11:09:03,532 [org.mybatis.spring.mapper.ClassPathMapperScanner:org.mybatis.spring.mapper.ClassPathMapperScanner.doScan(ClassPathMapperScanner.java:200)] Enabling autowire by type for MapperFactoryBean with name 'userDao'.
+[DEBUG] 2016-04-01 11:09:03,896 [org.mybatis.spring.SqlSessionFactoryBean:org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:383)] Scanned package: 'com.rentcar.system.domain' for aliases
+[DEBUG] 2016-04-01 11:09:03,935 [org.mybatis.spring.SqlSessionFactoryBean:org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:431)] Parsed configuration file: 'class path resource [mybatis-config.xml]'
+[DEBUG] 2016-04-01 11:09:04,015 [org.mybatis.spring.SqlSessionFactoryBean:org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:472)] Parsed mapper file: 'file [D:\java\workspace\RentCarSystem\target\classes\sqlMap\department.xml]'
+[DEBUG] 2016-04-01 11:09:04,040 [org.mybatis.spring.SqlSessionFactoryBean:org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:472)] Parsed mapper file: 'file [D:\java\workspace\RentCarSystem\target\classes\sqlMap\user.xml]'
+[DEBUG] 2016-04-01 11:09:04,262 [org.mybatis.spring.SqlSessionUtils:org.mybatis.spring.SqlSessionUtils.getSqlSession(SqlSessionUtils.java:104)] Creating a new SqlSession
+[DEBUG] 2016-04-01 11:09:04,283 [org.mybatis.spring.SqlSessionUtils:org.mybatis.spring.SqlSessionUtils.getSqlSession(SqlSessionUtils.java:140)] SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7c711375] was not registered for synchronization because synchronization is not active
+[DEBUG] 2016-04-01 11:09:06,801 [org.mybatis.spring.transaction.SpringManagedTransaction:org.mybatis.spring.transaction.SpringManagedTransaction.openConnection(SpringManagedTransaction.java:86)] JDBC Connection [jdbc:mysql://222.22.91.225:3306/managersystem?useUnicode=true&amp;characterEncoding=UTF-8, UserName=root@115.60.149.36, MySQL Connector Java] will not be managed by Spring
+[DEBUG] 2016-04-01 11:09:07,056 [org.mybatis.spring.transaction.SpringManagedTransaction:org.mybatis.spring.transaction.SpringManagedTransaction.commit(SpringManagedTransaction.java:101)] Committing JDBC Connection [jdbc:mysql://222.22.91.225:3306/managersystem?useUnicode=true&amp;characterEncoding=UTF-8, UserName=root@115.60.149.36, MySQL Connector Java]
+[DEBUG] 2016-04-01 11:09:07,127 [org.mybatis.spring.SqlSessionUtils:org.mybatis.spring.SqlSessionUtils.closeSqlSession(SqlSessionUtils.java:168)] Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7c711375]

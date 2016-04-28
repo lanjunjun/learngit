@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>总体布局</title>
+	<link rel="stylesheet" type="text/css" href="../resources/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../resources/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/demo.css">
+	<script type="text/javascript" src="../resources/js/jquery.1.8.js"></script>
+	<script type="text/javascript" src="../resources/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../resources/js/common.js"></script>
+</head>
+<style>
+
+.topMenu{
+	position:absolute;
+	bottom:-1px;
+	right:0px;
+	width:50%;
+	height:40%;
+	border-radius:5px;
+	background-color:#E0ECFF
+}
+
+</style>
+<body>
+	<div class="easyui-layout initLayout">
+	
+		<!--头-->
+		<div id="Top" class="icon-topbg" data-options="region:'north'" style="height:10%;width:100%;">
+			<!--头部菜单-->
+			<div class="easyui-panel topMenu" style="width:30%">
+				<a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-user'">个人信息</a>
+				<a href="#" class="easyui-menubutton" data-options="menu:'#m2',iconCls:'icon-mes'">消息推送</a>
+				<a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-syst'">退出</a>
+				<a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-time'"></a>
+			</div>
+			<!--二级菜单-->
+			<div id="m2" style="width:100px;">
+				<div data-options="iconCls:'icon-info'">汽车租赁3</div>
+				<div data-options="iconCls:'icon-info'">财务收支5</div>
+				<div data-options="iconCls:'icon-info'">运营中心2</div>
+			</div>
+		</div>
+		
+		<!--尾-->
+		<div id="Bottom" class="icon-topbg" data-options="region:'south'" style="height:10%;width:100%">
+		</div>
+		
+		<!--左侧-->
+		<div id="Left" data-options="region:'west',split:true,iconCls:'icon-user'" title="导航菜单" style="height:80%;width:15%">
+			<div id="ArrPower" class="easyui-accordion" style="width:100%"></div>
+		</div>
+		
+		<!--中心面板-->
+		<div id="Center" data-options="region:'center'" style="height:80%;width:75%;">
+			<div id="tabs" class="easyui-tabs" fit="true" border="false">
+			</div>
+		</div>
+		
+		<!--个人信息-->
+		<div id="infor" class="easyui-window" title="个人信息" data-options="modal:true,closed:true,iconCls:'icon-user'" style="width:500px;height:300px;padding:10px;">
+			<table cellpadding="5" style="width:auto" align="center" >
+				<tr>
+					<td>姓名</td>
+					<td><input class="easyui-textbox" type="text"></input></td>
+				</tr>
+				<tr>
+					<td>角色</td>
+					<td><input class="easyui-textbox" type="text"></input></td>
+				</tr>
+				<tr>
+					<td>手机号码</td>
+					<td><input class="easyui-textbox" type="text"></input></td>
+				</tr>
+				<tr>
+					<td>姓名</td>
+					<td><input class="easyui-textbox" type="text"></input></td>
+				</tr>
+				<tr>
+					<td>角色</td>
+					<td><input class="easyui-textbox" type="text"></input></td>
+				</tr>
+				<tr>
+					<td>手机号码</td>
+					<td><input class="easyui-textbox" type="text"></input></td>
+				</tr>				
+				<tr>
+					<td></td>
+					<td><span class="easyui-linkbutton c9" data-options="plain:true,iconCls:'icon-up'">提交</span></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		TestJson();
+		InitSize();
+		ClickEvent();
+		AddPanel();
+		
+	});
+	
+	function AddTabs(title,url,icon){
+		//判断是否存在tabs选项卡了选择或添加一个标签
+		if($("#tabs").tabs('exists', title)){
+			$("#tabs").tabs('select', title);
+		}else{
+			$('#tabs').tabs('add',{
+				title: title,
+				content: '<iframe style="width:100%;height:100%;" scrolling="auto" frameborder="0" src="' + url + '"></iframe>',
+				closable: true,
+				icon: icon
+			});
+		}       
+	}
+	
+	//分配权限
+	function AddPanel(){
+		
+		//var PowerUrl = "../json/menu_data.json";
+		//var PowerUrl = "../json/menu_finance.json";
+		var PowerUrl = "../json/menu_car.json";
+		//var PowerUrl = "../json/menu_multiple.json";
+
+		var menus = null;
+		$.ajax({
+        	type: "get",
+			async: false, 
+			url:PowerUrl,
+            dataType: "text",
+            success: function(data){
+				menus = eval(data);
+			}
+		});
+		for(var i=0;i<menus.length;i++){
+			var childrenMenu = menus[i].menus;
+			//手动填充过数据
+			var menulist = '<ul class = "ChildMenu">';
+			for(var j=0;j<childrenMenu.length;j++){
+				menulist +='<li><span><a href='+childrenMenu[j].url+'></a>'+childrenMenu[j].menuname+'</span></li>'
+			};
+			menulist += '</ul>'; 
+			//生成列表	 
+			$('#ArrPower').accordion('add',{
+				title:menus[i].menuname,
+				content:menulist,
+				iconCls : menus[i].icon
+			});	
+		}
+		//添加点击事件
+		$('.ChildMenu').tree({
+    		onClick: function(node){
+				var nodetxt = node.text;
+				var urlS = nodetxt.indexOf('="')+2;
+				var urlE = nodetxt.indexOf('">');
+				var Url = nodetxt.substring(urlS,urlE);
+				var Title = nodetxt.substring(urlE+6,nodetxt.length);
+				if(Url&&Title){
+					AddTabs(Title,Url,'icon-tip');
+				}
+    		}
+		});
+	}
+	
+	function ClickEvent(){
+		var topmenu = $(".topMenu a");
+		topmenu.eq(0).bind('click', function() {
+			 $('#infor').window('open');
+		});
+		
+		topmenu.eq(2).bind('click', function() {
+			 location.replace("../login.html");
+		});
+	}
+	
+	function InitSize(){
+		var width = $(window).width();  
+		var height = $(window).height();  
+		UiLayout = $('.easyui-layout').layout({  
+			width: width,  
+			height: height  
+		});  
+	}
+	
+	function nowTime(){
+		var dt = new Date();
+		var year = dt.getFullYear();
+		var month = dt.getMonth()+1;
+		var day = dt.getDate();
+		var hours = dt.getHours();
+		var minute = dt.getMinutes();
+		var second = dt.getSeconds();
+		if(month<10){
+			month = "0" + month;
+		}
+		if(day<10){
+			day = "0" + day;
+		}
+		if(second<10){
+			second = "0" + second;
+		}
+		if(minute<10){
+			minute = "0" + minute;
+		}
+		if(hours<10){
+			hours = "0" + hours;
+		}
+		var nowTime =year+"/"+month+"/"+day+" "+hours+":"+minute+":"+second;
+		$(".topMenu a").eq(3).text(nowTime);
+	}
+ 	window.setInterval(nowTime, 1000);
+	
+	function TestJson(){
+		$.ajax({
+        	type: "get",
+			async: false, 
+            url: "../json/menu_data.json",
+            dataType: "text",
+            success: function(data){
+			},error:function(XMLHttpRequest, textStatus, errorThrown){
+				$.messager.alert('提醒','您的浏览器权限未打开，不能看到json数据家在效果','info');
+			}
+		});
+	}
+	
+</script>
+</html>

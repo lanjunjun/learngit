@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+	<link rel="stylesheet" type="text/css" href="../../../../resources/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resources/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resources/css/demo.css">
+	<script type="text/javascript" src="../../../../resources/js/jquery.1.8.js"></script>
+	<script type="text/javascript" src="../../../../resources/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../../resources/js/common.js"></script>
+</head>
+<script type="text/javascript">
+
+function InitDatagrid(id){
+	$('#dg').datagrid({
+		url:getRootPath()+"/carorder/getMaintainOrder.json",
+		method:'get',
+		pagination:true,
+		rownumbers:true,
+		pageList:[10,15,20,25],
+		pageSize:10,
+		title:'处理车辆订单',
+		singleSelect:true,
+		queryParams:{
+			ocID:id
+		},
+		columns:[[
+			{field:'repairOrderID',title:'维修订单号',width:100},
+			{field:'operactingName',title:'运营中心名称',width:100},
+			{field:'car_LicensePlate',title:'车牌号',width:100},
+			{field:'repair_Maintain',title:'维修/保养',width:100,formatter:function(value,row,index){
+				if(value==1){
+					return "维修";
+				}
+				if(value==2){
+					return "保养";
+				}
+			}},
+			{field:'apply_Time',title:'申请时间',width:150,formatter:function(value,row,index){
+				return fromatDate(new Date(Number(value)));
+			}},
+			{field:'contract',title:'操作',width:150,formatter:function(value,row,index){
+			 	return createLinkElement('查看订单详情','viewOrderDetail('+row.repairOrderID+')','icon-search');
+			}}
+		]]
+	});
+}
+</script>
+<style>
+.centerContent{
+	position:absolute;
+	left:1px;
+	width:100%;
+	height:auto;
+	padding:3px;
+	border-radius:10px;
+	background-color:#E0ECFF
+}
+
+</style>
+<body>
+<div class="easyui-layout initLayout">
+	<!--角色树-->
+	<div id="Left" data-options="region:'west',split:true" style="height:80%;width:15%"> 
+		<div class="easyui-panel" style="width:100%">
+			<ul id="tt"></ul>
+		</div>
+	</div>
+	
+	<!--子权限-->
+	<div id="Center" data-options="region:'center'" style="height:80%;width:85%;">
+	
+		<div class="centerContent">
+			<table id="dg"></table>
+		</div>
+	</div>
+</div>
+</body>
+
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		InitSize();
+		InitTree();
+		getParameterValue();
+	});
+	
+	function getParameterValue(){
+		var href=location.href;
+		var args=href.split("?");
+		if(args.length==2){
+			var str=args[1];
+			var arg=str.split("=");
+			InitDatagrid(arg[1]);
+		}else{
+			return "";
+		}
+		
+	}
+	
+	function InitTree(){
+		$('#tt').tree({
+				url:getRootPath()+"/carorder/getOC.json",
+				method: 'get',
+				onClick:function(node){
+					if($('#tt').tree('isLeaf',node.target)){//判断是否是叶子节点
+						InitDatagrid(node.id);
+					}
+				},
+				
+				onContextMenu: function(e, node){  
+					e.preventDefault();  
+					$('#tt').tree('select', node.target);  
+				},
+				onLoadSuccess: function () {
+					//获取根节点
+					var rootnode = $('#tt').tree('getRoot');	
+					//alert(rootnode.id);
+				}	   
+			});
+	}
+	function viewOrderDetail(repairOrderID){
+		location.replace(getRootPath()+"/pages/Department/Car/Preventive/MaintainDetail.html?repairOrderID="+repairOrderID);
+	}		
+	function InitSize(){
+		var width = $(window).width();  
+		var height = $(window).height();  
+		UiLayout = $('.easyui-layout').layout({  
+			width: width,  
+			height: height  
+		});  
+	}
+	
+</script>
+</html>

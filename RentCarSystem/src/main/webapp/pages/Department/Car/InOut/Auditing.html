@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+	<link rel="stylesheet" type="text/css" href="../../../../resources/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resources/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resources/css/demo.css">
+	<script type="text/javascript" src="../../../../resources/js/jquery.1.8.js"></script>
+	<script type="text/javascript" src="../../../../resources/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../../resources/js/common.js"></script>
+</head>
+<style>
+
+.centerContent{
+	position:absolute;
+	left:1px;
+	width:100%;
+	height:auto;
+	padding:3px;
+	border-radius:10px;
+	background-color:#E0ECFF
+}
+
+</style>
+<body>
+<div class="easyui-layout initLayout">
+
+	<!--角色树-->
+	<div id="Left" data-options="region:'west',split:true" style="height:80%;width:15%"> 
+		<div class="easyui-panel" style="width:100%">
+			<ul id="tt"></ul> 
+		</div>
+	</div>
+	
+	<!--子权限-->
+	<div id="Center" data-options="region:'center'" style="height:80%;width:85%;margin: 0px;padding: 0px">
+		<div class="centerContent">
+			<table id="dg"></table>
+		</div>
+	</div>
+	
+</div>
+</body>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		InitSize();
+		InitTree();
+		/* InitDateTable(); */
+		
+	});
+	function AgreeTest(ID){
+		$.ajax({
+			url:getRootPath()+"/car/agreeCarInfo.action",
+			data:{
+				'carID':ID
+			},
+		    type:'post',
+			success:function(data){
+				if(data.msg=="true"){
+					alert("审批成功！");
+					$('#dg').datagrid('reload');
+				}else {
+					alert("审批失败");
+				}
+			},
+			error:function(){
+				alert("出现异常！");
+			}
+			
+		});
+	}
+	function NotAgreeTest(ID){
+		$.ajax({
+			url:getRootPath()+"/car/notAgreeCarInfo.action",
+			data:{
+				'carID':ID
+			},
+		    type:'post',
+			success:function(data){
+				if(data==1){
+					alert("否决成功！");
+					$('#dg').datagrid('reload');
+				}else {
+					alert("否决失败");
+				}
+			},
+			error:function(){
+				alert("出现异常！");
+			}
+		});
+	}
+	function InitTree(){
+		$('#tt').tree({
+				url:getRootPath()+'/area/getAllArea.json',
+				method: 'get',
+				title:'审核车辆信息',
+				onClick:function(node){
+					console.log(node.id);
+					$('#dg').datagrid({
+						url:getRootPath()+"/car/selectCarInfo.json",
+						method:'get',
+						pagination:true,
+						rownumbers:true,
+						pageList:[5,10,15,20],
+						pageSize:5,
+						title:'处理未审核车辆',
+						queryParams:{
+							areaID:node.id
+						},
+						columns:[[
+						          {field:'c_Brand',title:'品牌',width:100},
+						          {field:'c_Type',title:'车辆型号',width:200},
+						          {field:'c_Color',title:'车身颜色',width:150},
+						          {field:'c_FuelType',title:'燃油类型',width:100},
+						          {field:'c_Motor',title:'发动机型号',width:100},
+						          {field:'c_RecordTime',title:'信息录入时间',width:150,formatter:function(value,row,index){
+							    	  return fromatDate(new Date(Number(value)));
+						          }},
+						          {field:'carID',title:'操作',width:150,formatter:function(value,row,index){
+						        	  return createLinkElement('同意','AgreeTest('+value+')','icon-ok')+createLinkElement("不同意", 'NotAgreeTest('+value+')', 'icon-cancel');
+						          }}
+						        ]]
+					});
+				},
+				onContextMenu: function(e, node){  
+					e.preventDefault();  
+					//展开当前节点
+					$('#tt').tree('select', node.target);  
+				},
+				onLoadSuccess: function () {
+					//获取根节点
+					var rootnode = $('#tt').tree('getRoot');	
+					//alert(rootnode.id);
+				}	
+			});
+	} 
+	
+	/* function InitDateTable(){
+		$('#dg').datagrid({
+				url: '../../../../json/datagrid_data.json',
+				method: 'get',
+				title: '',
+				iconCls: 'icon-book',
+				width: 'auto',
+				height: 'auto',
+				fitColumns: true,
+				singleSelect: true,//是否单选
+                rownumbers: true,//显示行号
+				pagination:true,//分页控件
+				columns:[[
+					{field:'itemid',title:'菜单名称',width:50},
+					{field:'productid',title:'URL',width:100},
+					{field: 'operat', title: '操作', align: 'center', width:50,formatter:
+						function (value, rowData, index) {
+							//设置列样式（列属性API），value列的值，index列索引，rowData行数据
+							return createLinkElement('添加','EditTest('+rowData.itemid+')','icon-add')
+							+createLinkElement('隐藏','DeletTest('+rowData.itemid+')','icon-remove');
+						}
+                     }
+				]],
+				onHeaderContextMenu: function(e, field){
+					e.preventDefault();
+					if (!cmenu){
+						createColumnMenu();
+					}
+					cmenu.menu('show', {
+						left:e.pageX,
+						top:e.pageY
+					});
+				},
+				onLoadSuccess: function () {
+					//设置分页控件 
+					var p = $('#dg').datagrid('getPager'); 
+					$(p).pagination({ 
+						pageSize: 10,         //每页显示的记录条数，默认为10 
+						pageList: [5,10,15],  //可以设置每页记录条数的列表 
+						beforePageText: '第',  //页数文本框前显示的汉字 
+						afterPageText: '页    共 {pages} 页', 
+						displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
+						onBeforeRefresh:function(){
+							$(this).pagination('loading');
+							alert('before refresh');
+							$(this).pagination('loaded');
+						}
+					}); 
+				}	
+		});
+	}; */
+			
+	function InitSize(){
+		var width = $(window).width();  
+		var height = $(window).height();  
+		UiLayout = $('.easyui-layout').layout({  
+			width: width,  
+			height: height  
+		});  
+	}
+	
+</script>
+</html>

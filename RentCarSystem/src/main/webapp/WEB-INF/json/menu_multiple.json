@@ -1,0 +1,53 @@
+﻿{
+	power:[
+		{
+			"powerid" : "1",
+			"icon" : "icon-power",
+			"menuname" : "数据挖掘",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "统计分析",
+				"url" : "../pages/Department/Multiple/DataMining/Analysis.html"
+			}, {
+				"menuid" : "02",
+				"menuname" : "黑名单",
+				"url" : "../pages/Department/Multiple/DataMining/Blacklist.html"
+			}]
+		},{
+			"powerid" : "2",
+			"icon" : "icon-power",
+			"menuname" : "运营中心",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "运营中心",
+				"url" : "../pages/Department/Multiple/BusSpot/BussCentro.html"
+			}, {
+				"menuid" : "02",
+				"menuname" : "租车网点",
+				"url" : "../pages/Department/Multiple/BusSpot/BussSpot.html"
+			}]
+		},{
+			"powerid" : "3",
+			"icon" : "icon-power",
+			"menuname" : "会员管理",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "会员管理",
+				"url" : "../pages/Department/Multiple/VIP/ManaVIP.html"
+			}]
+		},{
+			"powerid" : "4",
+			"icon" : "icon-power",
+			"menuname" : "人员管理",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "人员管理",
+				"url" : "../pages/Department/Employee/ManageEmployee.html"
+			},{
+				"menuid" : "02",
+				"menuname" : "新建人员",
+				"url" : "../pages/Department/Employee/NewEmployee.html"
+			}]
+		}	
+	]
+}

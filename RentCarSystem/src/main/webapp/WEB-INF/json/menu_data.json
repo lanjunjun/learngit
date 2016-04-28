@@ -1,0 +1,70 @@
+﻿{
+	power:[
+		{
+			"powerid" : "1",
+			"icon" : "icon-power",
+			"menuname" : "部门管理",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "部门管理",
+				"url" : "../pages/Manager/Department/ManageDepartment.html"
+			}, {
+				"menuid" : "02",
+				"menuname" : "新建部门",
+				"url" : "../pages/Manager/Department/NewDepartment.html"
+			}]
+		},{
+			"powerid" : "2",
+			"icon" : "icon-power",
+			"menuname" : "用户管理",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "主管管理",
+				"url" : "../pages/Manager/User/ManageUser.html"
+			}, {
+				"menuid" : "02",
+				"menuname" : "新建主管",
+				"url" : "../pages/Manager/User/NewUser.html"
+			}]
+		},{
+			"powerid" : "3",
+			"icon" : "icon-power",
+			"menuname" : "角色管理",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "角色管理",
+				"url" : "../pages/Manager/Role/ManageRole.html"
+			}]
+		},{
+			"powerid" : "4",
+			"icon" : "icon-power",
+			"menuname" : "菜单管理",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "菜单管理",
+				"url" : "../pages/Manager/Menu/ManageMenu.html"
+			}]
+		},{
+			"powerid" : "5",
+			"icon" : "icon-power",
+			"menuname" : "数据字典",
+			"menus" : [{
+				"menuid" : "01",
+				"menuname" : "租金分成",
+				"url" : "http://www.baidu.com"
+			},{
+				"menuid" : "02",
+				"menuname" : "租车类型",
+				"url" : "http://www.baidu.com"
+			}, {
+				"menuid" : "02",
+				"menuname" : "会员卡",
+				"url" : "http://www.baidu.com"
+			}, {
+				"menuid" : "03",
+				"menuname" : "违章处理",
+				"url" : "http://www.baidu.com"
+			}]
+		}	
+	]
+}

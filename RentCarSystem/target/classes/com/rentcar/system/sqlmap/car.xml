@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rentcar.system.dao.CarDao">
+
+	<insert id="insertCarInfo" parameterType="CarInfo">
+		INSERT into car_info (C_Brand,C_Type,C_Price,C_Source,C_AuditStatus,C_RecordTime,C_LicensePlate,C_VIN,C_FuelType,C_Motor,C_BuyDate,C_Color,C_Owner) VALUES(#{c_Brand},#{c_Type},#{c_Price},#{c_Source},#{c_AuditStatus},#{c_RecordTime},#{c_LicensePlate},#{c_VIN},#{c_FuelType},#{c_Motor},#{c_BuyDate},#{c_Color},#{c_Owner})
+	</insert>
+	<select id="selectCarInfoByAreaID" resultType="CarInfo" parameterType="map">
+		SELECT car_info.CarID,car_info.C_Brand,car_info.C_Type,car_info.C_LicensePlate,car_info.C_VIN,car_info.C_Motor,car_info.C_Color,car_info.C_FuelType,car_info.C_RecordTime from network,car_info where network.area_id=#{areaID} and network.network_id=car_info.C_NetworkID and car_info.C_AuditStatus=2 limit #{page},#{rows}
+	</select>
+	<update id="agreeCarInfo" parameterType="long">
+		update car_info set C_AuditStatus=3 where CarID=#{carID}
+	</update>
+	<select id="getCarInfoByAreaCountDao" parameterType="int" resultType="int">
+		SELECT count(car_info.CarID) from network,car_info where network.area_id=#{areaID} and network.network_id=car_info.C_NetworkID and car_info.C_AuditStatus=2
+	</select>
+	<update id="notAgreeCarInfo" parameterType="long">
+		update car_info set C_AuditStatus=4 where CarID=#{carID}
+	</update>
+	<select id="processOrder" resultType="Contract" parameterType="long">
+		select ContractID,PartyA,Network_ID,PartyB,RecordPersonID,RecordPersonName,RecordTime from contract where `Status`=1 and Network_ID=#{networkID}
+	</select>
+	<select id="selectContractDetail" parameterType="long" resultType="ContractDetail">
+		SELECT numberID,car_Brand,car_Type,car_Deposit from contract_detail where contractID=#{contractID}
+	</select>
+	<select id="mappingCar" resultType="CarInfo">
+		select carID ,c_LicensePlate from car_info where C_AuditStatus=3 and C_Using=1 and C_Brand=#{param1} and C_Type=#{param2}
+	</select>
+	<select id="getOpearctingCenter" resultType="Standard">
+		select OperatingID as id,Operating_Name as text from operacting_center
+	</select>
+	<select id="selectNetworkByOcID" parameterType="long" resultType="Standard">
+		select network_id as id,network_name as text from network where oc_id=#{ocID} 
+	</select>
+	<select id="processMaintainRepair" parameterType="long" resultType="RepairOrder">
+		select RepairOrderID,OperactingName,Car_LicensePlate,Repair_Maintain,Apply_Time,AuditCar_Time,AuditCar_Person,AuditFinance_Time,AuditFinance_Person from repair_order where CarAuditStatus=1 and OperactingID=#{ocID}
+	</select>
+	<select id="selectRepairOrderDetail" parameterType="map" resultType="RepairOrderDetail">
+		select repairID,project,forecast_Cost,actual_Cost,taskTime from repair_orderdetail WHERE RepairOrderID=#{repairOrderID} and CarAuditStatus=1 limit #{page},#{rows}
+	</select>
+	<update id="agreeRepairCar">
+		update repair_orderdetail set CarAuditStatus=#{param2} where RepairID=#{param1}
+	</update>
+	<select id="selectCountOfRepairDetail" parameterType="long" resultType="int">
+		select COUNT(RepairID) from repair_orderdetail where RepairOrderID=#{repairOrderID} and CarAuditStatus=1
+	</select>
+	<select id="selectCountAllOfRepairDetail" parameterType="long" resultType="int">
+		select COUNT(RepairID) from repair_orderdetail where RepairOrderID=#{repairOrderID}
+	</select>
+	<select id="selectCountAgreeOfRepairDetail" parameterType="long" resultType="int">
+		select COUNT(RepairID) from repair_orderdetail where RepairOrderID=#{repairOrderID} and CarAuditStatus=2
+	</select>
+	<update id="updateCarAgreeRepairOrder" parameterType="long">
+		update repair_order set CarAuditStatus=2 where RepairOrderID=#{repairOrderID}
+	</update>
+</mapper>

@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>新建车辆信息</title>
+<link rel="stylesheet" type="text/css" href="../../../../resources/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../../../resources/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../../../../resources/css/demo.css">
+<script type="text/javascript" src="../../../../resources/js/jquery.1.8.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../../resources/js/jquery.easyui.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../../resources/js/easyui-lang-zh_CN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../../resources/js/common.js"></script>
+</head>
+<body>
+	<div class="easyui-layout initLayout">
+		<div id="Center" data-options="region:'center'" style="height: 100%; width: 100%;">
+				<div class="easyui-panel" title="新增车辆信息" style="width: 100%">
+					<div style="padding: 30px 60px 20px 60px">
+						<form id="ff" name="carForm" method="post">
+							<div>
+								<table cellpadding="3px" style="width: auto" align="center"
+									id="cartable">
+									<tr>
+										<td><span>车辆信息</span></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>车辆品牌</td>
+										<td><input class="easyui-textbox" type="text" name="c_Brand" data-options="required:true"></input></td>
+										<td>车辆型号</td>
+										<td><input class="easyui-textbox" type="text" name="c_Type" data-options="required:true"></input></td>
+										<td>车辆价格</td>
+										<td><input class="easyui-textbox" type="text" name="c_Price"  data-options="required:true"></input></td>
+										<td>车牌号</td>
+										<td><input class="easyui-textbox" type="text" name="c_LicensePlate" data-options="required:true"></input></td>
+									</tr>
+									<tr>
+										<td>车架号</td>
+										<td><input class="easyui-textbox" type="text" name="c_VIN" data-options="required:true"></input></td>
+										<td>燃油型号</td>
+										<td><input class="easyui-textbox" type="text" name="c_FuelType" data-options="required:true"></input></td>
+										<td>发动机号</td>
+										<td><input class="easyui-textbox" type="text" name="c_Motor" data-options="required:true"></input></td>
+										<td>车身颜色</td>
+										<td><input class="easyui-textbox" type="text" name="c_Color" data-options="required:true"></input></td>
+									</tr>
+									<tr>
+										<td>购买日期</td>
+										<td><input class="easyui-datebox" type="text" name="c_BuyDate" data-options="required:true"></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td></td>
+										<td><a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-back'" onclick="submitForm()">提交</a></td>
+										<td><a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-back'" onclick="clearForm()">清空</a></td>
+									</tr>
+								</table>
+							</div>
+						</form>
+					</div>
+				</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		InitSize();
+	});
+
+	function submitForm(){
+		$('#ff').form({
+			url:getRootPath()+"/car/submitCarInfo.action",
+			onSubmit:function(){
+				return $(this).form('validate');
+			}, 
+			success:function(data){
+				if(data==1)
+				{
+					$.messager.alert('消息','成功提交车辆信息','info');
+				}else{
+					$.messager.alert('错误','提交车辆信息失败','error');
+				}
+				
+			}
+		});
+		$('#ff').submit(); 
+	}
+	function clearForm(){
+		$('#ff').form('clear');
+	}
+	function InitSize() {
+		var width = $(window).width();
+		var height = $(window).height();
+		UiLayout = $('.easyui-layout').layout({
+			width : width,
+			height : height
+		});
+	}
+</script>
+</html>

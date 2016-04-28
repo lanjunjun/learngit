@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>登录</title>
+  <link rel="stylesheet" type="text/css" href="resources/css/login.css">
+  <script src='resources/js/jquery.1.8.js'></script>
+  <script src="resources/js/login_tools.js"></script>
+</head>
+
+<body>
+	<div class="country-wrap">
+	<div class="main_bg"></div>
+	<div class="main_box">
+	    <div class="logintitle" align="center" class="title">登 录</div>
+		<div class="username">
+			 <input id="usernum" style="width:300px;"  type="text" placeholder="账号"/>
+	    </div>
+		<div class="userpass">
+		 	<input id="password" style="width:300px;"  type="password" placeholder="密码"/>
+	    </div>
+		<div class="userpro">
+		 	<input id="procode" style="width:130px;"  type="text" placeholder="验证码"/>
+	    </div>
+		<div class="proimg">
+			 <img id="imgCode" src="toCode" /><a href="javascript:ChangeCode()">换一张</a></div>
+		<div class="submitit">
+		 	<input type="button" class="btn"  value="提交" onclick="Login()" />
+	    </div>
+		<div class="resetit">
+			 <input type="reset" class="btn"  value="重置" onclick="ClearInfor()"/>
+	    </div>
+	</div>
+	<div class="sun"></div>
+	<div class="grass"></div>
+	<div class="street">
+		<div class="car">
+			<div class="car-body">
+				<div class="car-top-back">
+					<div class="back-curve"></div>
+				</div>
+				<div class="car-gate"></div>
+				<div class="car-top-front">
+					<div class="wind-sheild"></div>
+				</div>
+				<div class="bonet-front"></div>
+				<div class="stepney"></div>
+			</div>
+			<div class="boundary-tyre-cover">
+				<div class="boundary-tyre-cover-back-bottom"></div>
+				<div class="boundary-tyre-cover-inner"></div>	
+			</div>
+			<div class="tyre-cover-front">
+				<div class="boundary-tyre-cover-inner-front"></div>
+			</div>
+			<div class="base-axcel"></div>
+			<div class="front-bumper"></div>
+			<div class="tyre">		
+				<div class="gap"></div>	
+			</div>
+			<div class="tyre front">
+				<div class="gap"></div>	
+			</div>
+			<div class="car-shadow"></div>
+		</div>
+	</div>
+	<div class="street-stripe"></div>
+	<div class="hill"></div>
+</div>
+<script type="text/javascript">
+
+	$("document").ready(function(){
+		ChangeCode();
+	});
+
+	function Login(){
+		$.ajax({
+			async : false,
+			cache : false,
+			timeout: 1000,
+			url: "Login/login.action",
+			type: "post",
+			success: function(data){
+				if(data==1){
+					location.replace('Login/main.action')
+				}else{
+					
+				}
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				alert(XMLHttpRequest.status);
+	            alert(XMLHttpRequest.readyState);
+	            alert(textStatus);	
+			}
+		});
+	}
+	
+	function ClearInfor(){
+		$("#usernum").val("");
+		$("#password").val("");
+	}
+	
+	function ChangeCode(){
+		
+		
+	}
+	
+</script>
+</body>
+</html>

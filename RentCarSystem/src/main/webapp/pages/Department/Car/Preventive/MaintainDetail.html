@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<link rel="stylesheet" type="text/css" href="../../../../resources/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resources/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resources/css/demo.css">
+	<script type="text/javascript" src="../../../../resources/js/jquery.1.8.js"></script>
+	<script type="text/javascript" src="../../../../resources/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../../resources/js/common.js"></script>
+</head>
+<style type="text/css">
+	body{
+		margin:0px;
+		padding: 0px;
+	}
+</style>
+<body>
+	<a id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-back',plain:true" href="#" onclick="backMaintain()">返回维修订单界面</a>
+	<table id="wintb"></table>
+</body>
+
+<script type="text/javascript">
+function getParameterValue(){
+	var href=location.href;
+	var args=href.split("?");
+	var str=args[1];
+	var arg=str.split("=");
+	return arg[1];
+}
+function backMaintain(){
+	location.replace("../../../../pages/Department/Car/Preventive/Maintain.html?repairOrderID="+getParameterValue());
+}
+function AgreeTest(repairID){
+	$.ajax({
+		url:getRootPath()+"/repair/agreeRepairDetail.action",
+		data:{
+			'repairID':repairID,
+			'agree':2,
+			'repairOrderID':getParameterValue()
+		},
+	    type:'post',
+		success:function(data){
+			if(data==1){
+				alert("审批成功！");
+				$('#wintb').datagrid('reload');
+			}else {
+				alert("审批失败");
+			}
+		},
+		error:function(){
+			alert("出现异常！");
+		}
+		
+	});
+}
+function NotAgreeTest(repairID){
+	$.ajax({
+		url:getRootPath()+"/repair/agreeRepairDetail.action",
+		data:{
+			'repairID':repairID,
+			'agree':3,
+			'repairOrderID':getParameterValue()
+		},
+	    type:'post',
+		success:function(data){
+			if(data==1){
+				alert("否决成功！");
+				$('#wintb').datagrid('reload');
+			}else {
+				alert("否决失败");
+			}
+		},
+		error:function(){
+			alert("出现异常！");
+		}
+	});
+}
+$('#wintb').datagrid({
+	url:getRootPath()+'/repair/selectRepairOrderDetail.json?repairOrderID='+getParameterValue(),
+	method:'get',
+	pagination:true,
+	title:'维修车辆订单',
+	rownumbers:true,
+	pageList:[10,15,20,25],
+	pageSize:10,
+	singleSelect:true,
+	columns:[[
+		{field:'repairID',title:'编号',width:100},
+		{field:'project',title:'项目',width:150},
+		{field:'forecast_Cost',title:'预算金额',width:100},
+		{field:'car_Depo',title:'操作',width:200,formatter:function(value,row,index){
+			 return createLinkElement('同意','AgreeTest('+row.repairID+')','icon-ok')+createLinkElement("不同意", 'NotAgreeTest('+row.repairID+')', 'icon-cancel');
+		}}
+	]],
+	onLoadSuccess:function(){
+		var pager=$('#wintb').datagrid('getPager');
+		$(pager).pagination({
+			beforePageText: '第',  //页数文本框前显示的汉字 
+			afterPageText: '页    共 {pages} 页', 
+			displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
+		});
+	}
+	
+});
+</script>
+</html>

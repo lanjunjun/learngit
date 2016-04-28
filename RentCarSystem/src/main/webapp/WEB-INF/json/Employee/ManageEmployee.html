@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>部门管理</title>
+	<link rel="stylesheet" type="text/css" href="../../../resources/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../resources/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../../../resources/css/demo.css">
+	<script type="text/javascript" src="../../../resources/js/jquery.1.8.js"></script>
+	<script type="text/javascript" src="../../../resources/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../resources/js/common.js"></script>
+</head>
+<style>
+
+.centerMenu{
+	position:absolute;
+	top:-1px;
+	left:1px;
+	width:100%;
+	height:6%;
+	padding-left:5px;
+	background-color:#FFF
+}
+.centerContent{
+	position:absolute;
+	top:6%;
+	left:1px;
+	width:100%;
+	height:auto;
+	background-color:#E0ECFF
+}
+
+</style>
+<body>
+	<!--总体布局-->
+	<div class="easyui-layout initLayout">
+		<!--内容面板-->
+	  	<div id="Center" data-options="region:'center'">
+		
+			<div class="centerMenu">
+				<div id="tb" style="padding:2px 5px;">
+					起始日期: <input class="easyui-datebox" style="width:110px">
+					截止日期: <input class="easyui-datebox" style="width:110px">
+					性别:<select class="easyui-combobox" panelHeight="auto" style="width:100px">
+							<option value="1">男</option>
+							<option value="0">女</option>
+						 </select>
+					<a href="#" class="easyui-linkbutton" iconCls="icon-search">查询</a>
+				</div>
+			</div>
+			
+			<div class="centerContent">
+				<table id="dg"></table>
+			</div>
+			
+	  	</div>
+	</div>
+</body>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		InitSize();
+		InitDateTable();
+	});
+	
+	
+	
+	function InitDateTable(){
+		$('#dg').datagrid({
+				url: '../../../json/datagrid_data.json',
+				method: 'get',
+				title: '',
+				iconCls: 'icon-book',
+				width: 'auto',
+				height: 'auto',
+				fitColumns: true,
+				singleSelect: true,//是否单选
+                rownumbers: true,//显示行号
+				pagination:true,//分页控件
+				columns:[[
+					{field:'itemid',title:'用户ID',width:80},
+					{field:'productid',title:'姓名',width:80},
+					{field:'listprice',title:'性别',width:80,align:'right'},
+					{field:'unitcost',title:'电话',width:80,align:'right'},
+					{field:'attr1',title:'简介',width:80},
+					{field: 'operat', title: '操作', align: 'center', width:200,formatter:
+						function (value, rowData, index) {
+							//设置列样式（列属性API），value列的值，index列索引，rowData行数据
+							return createLinkElement('编辑','EditTest('+rowData.itemid+')','icon-edit')
+							+createLinkElement('删除','DeletTest('+rowData.itemid+')','icon-remove');
+						}
+                     }
+				]],
+				onHeaderContextMenu: function(e, field){
+					e.preventDefault();
+					if (!cmenu){
+						createColumnMenu();
+					}
+					cmenu.menu('show', {
+						left:e.pageX,
+						top:e.pageY
+					});
+				},
+				onLoadSuccess: function () {
+					//设置分页控件 
+					var p = $('#dg').datagrid('getPager'); 
+					$(p).pagination({ 
+						pageSize: 10,         //每页显示的记录条数，默认为10 
+						pageList: [5,10,15],  //可以设置每页记录条数的列表 
+						beforePageText: '第',  //页数文本框前显示的汉字 
+						afterPageText: '页    共 {pages} 页', 
+						displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
+						onBeforeRefresh:function(){
+							$(this).pagination('loading');
+							alert('before refresh');
+							$(this).pagination('loaded');
+						}
+					}); 
+				}	
+		});
+	};
+			
+	function InitSize(){
+		var width = $(window).width();  
+		var height = $(window).height();  
+		UiLayout = $('.easyui-layout').layout({  
+			width: width,  
+			height: height  
+		});  
+	}
+	
+</script>
+</html>

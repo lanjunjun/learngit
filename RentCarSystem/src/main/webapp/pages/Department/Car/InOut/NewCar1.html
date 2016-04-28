@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>新建车辆信息</title>
+<link rel="stylesheet" type="text/css" href="../../../../resources/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../../../resources/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../../../../resources/css/demo.css">
+<script type="text/javascript" src="../../../../resources/js/jquery.1.8.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../../resources/js/jquery.easyui.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../../resources/js/easyui-lang-zh_CN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../../resources/js/common.js"></script>
+</head>
+<style>
+.centerMenu {
+	position: absolute;
+	top: -1px;
+	left: 1px;
+	width: 100%;
+	height: 6%;
+	padding-left: 5px;
+	border-radius: 1px;
+	background-color: #E0ECFF
+}
+
+.centerContent {
+	position: absolute;
+	top: 6%;
+	left: 0%;
+	width: 100%;
+	height: auto;
+	padding: 1px;
+	border-radius: 10px;
+	background-color: #E0ECFF
+}
+</style>
+<body>
+	<div class="easyui-layout initLayout">
+		<div id="Center" data-options="region:'center'"
+			style="height: 100%; width: 100%;">
+			<div class="centerMenu">
+				<div id="ft" style="padding: 2px 5px;">
+					<a href="#" class="easyui-linkbutton" iconCls="icon-back"
+						plain="true">返回部门管理</a>
+				</div>
+			</div>
+			<div class="centerContent">
+				<div class="easyui-panel" title="新增车辆信息" style="width: 100%">
+					<div style="padding: 30px 60px 20px 60px">
+						<form id="ff" name="carForm" enctype="multipart/form-data"
+							action="../../../../car/uploadCarInfo.action" method="post">
+							<div>
+								<table cellpadding="0" style="width: auto" align="center"
+									id="cartable">
+									<tr>
+										<td><span>车辆信息</span></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>车辆品牌</td>
+										<td><input class="easyui-textbox" type="text" name="c_Brand" data-options="required:true"></input></td>
+										<td>车辆型号</td>
+										<td><input class="easyui-textbox" type="text" name="c_Type" data-options="required:true"></input></td>
+										<td>车牌号</td>
+										<td><input class="easyui-textbox" type="text" name="c_LicensePlate" data-options="required:true"></input></td>
+										<td>车架号</td>
+										<td><input class="easyui-textbox" type="text" name="c_VIN" data-options="required:true"></input></td>
+									</tr>
+									<tr>
+										<td>燃油型号</td>
+										<td><input class="easyui-textbox" type="text" name="c_FuelType" data-options="required:true"></input></td>
+										<td>购买日期</td>
+										<td><input type="text" name="c_BuyDate" class="easyui-datebox" data-options="required:true"></td>
+										<td>发动机号</td>
+										<td><input class="easyui-textbox" type="text" name="c_Motor" data-options="required:true"></input></td>
+										<td>车身颜色</td>
+										<td><input class="easyui-textbox" type="text" name="c_Color" data-options="required:true"></input></td>
+									</tr>
+									<tr>
+										<td>是否已有车主信息</td>
+										<td><input type="radio" name="hasOwner" class="radio"
+											value="1" onclick="selectOwner(this.value);"
+											checked="checked" /> 没有车主信息</td>
+										<td><input type="radio" name="hasOwner" class="radio"
+											value="2" onclick="selectOwner(this.value);" /> 已有车主信息</td>
+										<td><span id="combo" style="display: none;"><select
+												id="cc" class="easyui-combotree" name="userID"
+												style="width: 130px;"
+												data-options="url:'../../../../area/getAllArea.json'"></select></span></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr class="test">
+										<td><span>车主信息</span></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr class="test">
+										<td>姓名</td>
+										<td><input class="easyui-textbox" type="text" name="userName"></input></td>
+										<td>手机号</td>
+										<td><input class="easyui-textbox" type="text" name="userPhone"></input></td>
+										<td>电子邮箱</td>
+										<td><input class="easyui-textbox" type="text" name="email"></input></td>
+										<td>毕业院校</td>
+										<td><input class="easyui-textbox" type="text" name="graduateSchool"></input></td>
+									</tr>
+									<tr class="test">
+										<td>工作单位</td>
+										<td><input class="easyui-textbox" type="text" name="workUnit"></input></td>
+										<td>家庭住址</td>
+										<td><select id="cc" class="easyui-combotree" name="address" style="width: 130px" data-options="valueField:'id',textField:'text',url:'../../../../area/getAllArea.json'"></select>
+										</td>
+										<td>介绍</td>
+										<td><input class="easyui-textbox" type="text" name="introduce"></input></td>
+									</tr>
+									<tr class="test">
+										<td>驾照</td>
+										<td><input class="easyui-filebox" name="drivingLicense"
+											style="width: 200px">&nbsp;<a id="btn" href="#"
+											class="easyui-linkbutton">上传</a></td>
+										<td>身份证照片</td>
+										<td><input class="easyui-filebox" name="idCardImg"
+											style="width: 200px">&nbsp;<a id="btn" href="#"
+											class="easyui-linkbutton">上传</a></td>
+										<td>头像</td>
+										<td><input class="easyui-filebox" name="headImg"
+											style="width: 200px">&nbsp;<a id="btn" href="#"
+											class="easyui-linkbutton">上传</a></td>
+									</tr>
+									<!-- <tr>
+										<td></td>
+										<td></td>
+										<td><span class="easyui-linkbutton c9"
+											data-options="plain:true,iconCls:'icon-back'"
+											onclick="submitDate();">提交</span></td>
+										<td><span class="easyui-linkbutton c9"
+											data-options="plain:true,iconCls:'icon-back'">清空</span></td>
+									</tr> -->
+								</table>
+								<input type="submit">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		InitSize();
+
+	});
+
+	function submitDate() {
+		var bmID = $('#bm').combobox('getValue');
+		alert(bmID);
+
+	}
+
+	function InitSize() {
+		var width = $(window).width();
+		var height = $(window).height();
+		UiLayout = $('.easyui-layout').layout({
+			width : width,
+			height : height
+		});
+	}
+	function selectOwner(val) {
+		var combo = document.getElementById("combo");
+		if (val == 1) {
+			$(".test").css("visibility", "visible");
+			combo.style.display = "none";
+		}
+		if (val == 2) {
+			$(".test").css("visibility", "hidden");
+			combo.style.visibility = "";
+	}
+} 
+</script>
+</html>

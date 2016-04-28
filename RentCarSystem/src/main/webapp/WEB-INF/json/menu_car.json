@@ -1,0 +1,73 @@
+﻿{
+	power:[
+		{
+			"powerid" : "1",
+			"icon" : "icon-power",
+			"menuname" : "车辆维护",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "车辆加油",
+				"url" : "../pages/Department/Car/Preventive/AddOil.html"
+			}, {
+				"menuid" : "02",
+				"menuname" : "车辆保养",
+				"url" : "../pages/Department/Car/Preventive/Maintain.html"
+			}, {
+				"menuid" : "03",
+				"menuname" : "车辆维护",
+				"url" : "../pages/Department/Car/Preventive/Prevent.html"
+			}, {
+				"menuid" : "03",
+				"menuname" : "车辆年检",
+				"url" : "../pages/Department/Car/Preventive/Annual.html"
+			}, {
+				"menuid" : "03",
+				"menuname" : "车辆保险",
+				"url" : "../pages/Department/Car/Preventive/Safe.html"
+			}]
+		},{
+			"powerid" : "2",
+			"icon" : "icon-power",
+			"menuname" : "车辆入出",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "车辆录入",
+				"url" : "../pages/Department/Car/InOut/NewCar.html"
+			}, {
+				"menuid" : "02",
+				"menuname" : "车辆调配",
+				"url" : "../pages/Department/Car/InOut/CarOut.html"
+			}, {
+				"menuid" : "02",
+				"menuname" : "车辆审核",
+				"url" : "../pages/Department/Car/InOut/Auditing.html"
+			}, {
+				"menuid" : "02",
+				"menuname" : "车辆收回",
+				"url" : "../pages/Department/Car/InOut/CarIn.html"
+			}]
+		},{
+			"powerid" : "3",
+			"icon" : "icon-power",
+			"menuname" : "违章车辆",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "违章处理",
+				"url" : "../pages/Department/Car/Illegal/IllegalCar.html"
+			}]
+		},{
+			"powerid" : "4",
+			"icon" : "icon-power",
+			"menuname" : "人员管理",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "人员管理",
+				"url" : "../pages/Department/Employee/ManageEmployee.html"
+			},{
+				"menuid" : "02",
+				"menuname" : "新建人员",
+				"url" : "../pages/Department/Employee/NewEmployee.html"
+			}]
+		}	
+	]
+}

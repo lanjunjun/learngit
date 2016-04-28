@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>新建部门</title>
+	<link rel="stylesheet" type="text/css" href="../../../resources/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../resources/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../../../resources/css/demo.css">
+	<script type="text/javascript" src="../../../resources/js/jquery.1.8.js"></script>
+	<script type="text/javascript" src="../../../resources/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../resources/js/common.js"></script>
+</head>
+<style>
+
+.centerMenu{
+	position:absolute;
+	top:-1px;
+	left:1px;
+	width:100%;
+	height:6%;
+	padding-left:5px;
+	background-color:#FFF
+}
+
+.centerContent{
+	position:absolute;
+	top:6%;
+	left:0%;
+	width:100%;
+	height:auto;
+	padding:1px;
+	border-radius:10px;
+	background-color:#E0ECFF
+}
+</style>
+<body>
+<div class="easyui-layout initLayout">
+  <div id="Center" data-options="region:'center'" style="height:80%;width:100%;">
+    <div class="centerMenu">
+		<div id="ft" style="padding:2px 5px;">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-back" plain="true">返回部门管理</a>
+		</div>
+	</div>
+    <div class="centerContent">
+		<div class="easyui-panel" title="" style="width:100%">
+		<div style="padding:10px 60px 20px 60px">
+			<form id="ff" method="post">
+				<table cellpadding="5" style="width:auto" align="center" >
+					<tr>
+						<td>部门名称</td>
+						<td>
+							<input class="easyui-textbox" type="text" data-options="required:true"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>创建人</td>
+						<td>
+							<input class="easyui-textbox" type="text" data-options="required:true"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>创建时间</td>
+						<td>
+							<input class="easyui-textbox" type="text" data-options="required:true"></input>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<span class="easyui-linkbutton c9" data-options="plain:true,iconCls:'icon-up'">提交</span>
+							<span class="easyui-linkbutton c9" data-options="plain:true,iconCls:'icon-back'">清空</span>
+						</td>
+					</tr>
+				</table>
+			</form>
+	    </div>
+	</div>
+
+	
+	
+	</div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		InitSize();
+	});
+	
+	function InitSize(){
+		var width = $(window).width();  
+		var height = $(window).height();  
+		UiLayout = $('.easyui-layout').layout({  
+			width: width,  
+			height: height  
+		});  
+	}
+</script>
+</html>

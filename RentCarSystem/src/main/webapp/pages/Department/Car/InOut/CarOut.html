@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+	<link rel="stylesheet" type="text/css" href="../../../../resources/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resources/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resources/css/demo.css">
+	<script type="text/javascript" src="../../../../resources/js/jquery.1.8.js"></script>
+	<script type="text/javascript" src="../../../../resources/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../../resources/js/common.js"></script>
+</head>
+<style>
+
+.centerContent{
+	position:absolute;
+	left:1px;
+	width:100%;
+	height:auto;
+	padding:3px;
+	border-radius:10px;
+	background-color:#E0ECFF
+}
+</style>
+<body>
+<div class="easyui-layout initLayout">
+	<div id="Left" data-options="region:'west',split:true" style="height:80%;width:15%"> 
+		<div class="easyui-panel" style="width:100%">
+			<ul id="tt"></ul> 
+		</div>
+	</div>
+	<div id="Center" data-options="region:'center'" style="height:80%;width:85%;margin: 0px;padding: 0px">
+		<div class="centerContent">
+			<table id="dg"></table>
+		</div>
+	</div>
+	<div id="win">
+		<table id="wintb"></table>
+	</div>
+</div>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		InitSize();
+		InitTree();
+		//initdatagrid();
+	});
+	function initdatagrid(){
+		$('#dg').datagrid({
+			url:getRootPath()+'/carorder/processContract.json',
+			method:'get',
+			pagination:true,
+			title:'处理车辆订单',
+			rownumbers:true,
+			singleSelect:true,
+			columns:[[
+			      {field:'contractID',title:'订单号',width:100},
+			      {field:'partyA',title:'甲方',width:100},
+			      {field:'partyB',title:'乙方',width:100},
+			      {field:'recordPersonName',title:'录入人',width:100},
+			      {field:'recordTime',title:'录入时间',width:100},
+			      {field:'contract',title:'操作',width:150,formatter:function(value,row,index){
+		        	  return createLinkElement('查看订单详情','viewOrderDetail('+row.contractID+')','icon-search');
+		          }}
+			]]
+		});
+	}
+	
+	function viewOrderDetail(value){
+		/* $('#win').window({
+			width:600,
+			height:500,
+			modal:true
+		});
+		$('#wintb').datagrid({
+			url:getRootPath()+'/carorder/selectContractDetail.json?contractID='+value,
+			method:'get',
+			pagination:true,
+			title:'配发车辆',
+			rownumbers:true,
+			singleSelect:true,
+			columns:[[
+				{field:'numberID',title:'编号',width:100},
+				{field:'car_Brand',title:'车辆品牌',width:100},
+				{field:'car_Type',title:'车辆型号',width:100},
+				{field:'car_Deposit',title:'车辆押金',width:100},
+				{field:'car_Deposit',title:'操作',width:100}
+			]]
+			
+		}); */
+		location.replace(getRootPath()+"/pages/Department/Car/InOut/carorderdetail.html?contractID="+value);
+	}
+	function InitTree(){
+		$('#tt').tree({
+				url:getRootPath()+'/carorder/getOpearctingCenter.json',
+				method: 'get',
+				title:'运营中心信息',
+				onClick:function(node){
+					console.log(node.id);
+					 if($('#tt').tree('isLeaf',node.target)){//判断是否是叶子节点
+						 $('#dg').datagrid({
+								url:getRootPath()+"/carorder/processContract.json",
+								method:'get',
+								pagination:true,
+								rownumbers:true,
+								pageList:[5,10,15,20],
+								pageSize:5,
+								title:'处理车辆订单',
+								singleSelect:true,
+								queryParams:{
+									networkID:node.id
+								},
+								columns:[[
+									      {field:'contractID',title:'订单号',width:100},
+									      {field:'partyA',title:'甲方',width:100},
+									      {field:'partyB',title:'乙方',width:100},
+									      {field:'recordPersonName',title:'录入人',width:100},
+									      {field:'recordTime',title:'录入时间',width:100},
+									      {field:'contract',title:'操作',width:150,formatter:function(value,row,index){
+								        	  return createLinkElement('查看订单详情','viewOrderDetail('+row.contractID+')','icon-search');
+								          }}
+									]]
+							});
+					 }
+				},
+				onContextMenu: function(e, node){  
+					e.preventDefault();  
+					//展开当前节点
+					$('#tt').tree('select', node.target);  
+				},
+				onLoadSuccess: function () {
+					//获取根节点
+					var rootnode = $('#tt').tree('getRoot');	
+					//alert(rootnode.id);
+				}	
+			});
+	} 
+	function InitSize(){
+		var width = $(window).width();  
+		var height = $(window).height();  
+		UiLayout = $('.easyui-layout').layout({  
+			width: width,  
+			height: height  
+		});  
+	}
+	
+</script>
+</html>

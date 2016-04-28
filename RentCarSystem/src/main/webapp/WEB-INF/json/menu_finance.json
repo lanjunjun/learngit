@@ -1,0 +1,57 @@
+﻿{
+	power:[
+		{
+			"powerid" : "1",
+			"icon" : "icon-power",
+			"menuname" : "收入管理",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "会员费用",
+				"url" : "../pages/Department/Finance/InCome/VIPMoney.html"
+			}, {
+				"menuid" : "02",
+				"menuname" : "车辆押金",
+				"url" : "../pages/Department/Finance/InCome/CarDeposit.html"
+			}, {
+				"menuid" : "03",
+				"menuname" : "运营中心",
+				"url" : "../pages/Department/Finance/InCome/BusSpot.html"
+			}]
+		},{
+			"powerid" : "2",
+			"icon" : "icon-power",
+			"menuname" : "支出管理",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "车辆费用",
+				"url" : "../pages/Department/Finance/Pay/CarPay.html"
+			}, {
+				"menuid" : "02",
+				"menuname" : "运营中心",
+				"url" : "../pages/Department/Finance/Pay/BusSpotPay.html"
+			}]
+		},{
+			"powerid" : "5",
+			"icon" : "icon-power",
+			"menuname" : "财物汇总",
+			"menus" : [{
+				"menuid" : "03",
+				"menuname" : "财物汇总",
+				"url" : "../pages/Department/Finance/FinanceSum/FinanceSum.html"
+			}]
+		},{
+			"powerid" : "4",
+			"icon" : "icon-power",
+			"menuname" : "人员管理",
+			"menus" : [ {
+				"menuid" : "01",
+				"menuname" : "人员管理",
+				"url" : "../pages/Department/Employee/ManageEmployee.html"
+			},{
+				"menuid" : "02",
+				"menuname" : "新建人员",
+				"url" : "../pages/Department/Employee/NewEmployee.html"
+			}]
+		}	
+	]
+}
